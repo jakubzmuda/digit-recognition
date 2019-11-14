@@ -4,6 +4,7 @@ import Canvas from './Canvas';
 import Result from './Result';
 import Debugger from './Debugger';
 import Image from '../Image';
+import NeuralNet from '../net/NeuralNet';
 
 export default class DigitRecognizer extends Component {
 
@@ -18,23 +19,33 @@ export default class DigitRecognizer extends Component {
           onAssess={(image) => this.assessDigit(image)}
         />
         <div className={styles.result}>
-          <Result />
+          <Result guessedNumber={this.state.guessedNumber}/>
         </div>
         <div className={styles.debugger}>
-          <Debugger inputImage={this.state.debuggerImage}/>
+          <Debugger inputImage={this.state.debuggerImage} />
         </div>
       </div>
     );
   }
 
   assessDigit(image) {
-    this.poolImage(image);
+    const image28px = this.poolImage(image);
+    const inputVector = this.flattenImageToVector(image28px);
+    const neuralNet = new NeuralNet(inputVector);
+    const output = neuralNet.process();
+    this.setState({
+      guessedNumber: output,
+      debuggerImage: image28px
+    })
   }
 
   poolImage(canvasImage) {
     const image = new Image(canvasImage);
-    const smallImage = image.as28pxImage();
-    this.setState({debuggerImage: smallImage});
+    return image.as28pxImage();
+  }
+
+  flattenImageToVector(image28px) {
+    return [].concat(...image28px);
   }
 }
 
