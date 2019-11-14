@@ -25,8 +25,8 @@ class ModelSeedGenerator {
 
   generateNeuron(inputVectorLength) {
     return {
-      weights: [...Array(inputVectorLength).keys()].map(() => this.randomBetween(-1, 1)),
-      bias: this.randomBetween(-inputVectorLength, inputVectorLength)
+      weights: [...Array(inputVectorLength).keys()].map(() => this.randomBetween(0, 1)),
+      bias: this.randomBetween(-inputVectorLength, 0)
     }
   }
 

@@ -4,7 +4,7 @@ export default class NeuralNet {
 
   evaluateForVector(inputVector) {
     const firstHiddenLayerOutput = this.evaluateFirstHiddenLayer(inputVector);
-    console.log(firstHiddenLayerOutput); // todo this is not kool, should be continuous
+    // console.log(firstHiddenLayerOutput); // todo this is not kool, should be continuous
     return 5;
   }
 
@@ -30,7 +30,7 @@ export default class NeuralNet {
       sum += inputVector[i] * weights[i];
     }
 
-    return Math.tanh(sum + bias);
+    return this.sigmoid(sum + bias);
   }
 
   sigmoid(input) {
