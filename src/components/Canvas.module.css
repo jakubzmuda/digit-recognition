@@ -1,4 +1,15 @@
 .container {
+
+}
+
+.canvas {
     cursor: crosshair;
     background-color: #fff;
+}
+
+.button {
+    outline: none;
+    width: 100%;
+    height: 32px;
+    margin-top: 16px;
 }

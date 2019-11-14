@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from './Canvas.module.css';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 export default class Canvas extends Component {
 
@@ -14,17 +15,20 @@ export default class Canvas extends Component {
   render() {
     return (
       <div className={styles.container}>
-        <canvas
-          ref={'canvas'}
-          width="400"
-          height="400"
-        />
+        <div className={styles.canvas}>
+          <canvas
+            ref={'canvas'}
+            width="400"
+            height="400"
+          />
+        </div>
+        <button className={styles.button} onClick={() => this.assessDigit()}>go</button>
       </div>
     );
   }
 
   initCanvas() {
-    const canvas = this.refs.canvas;
+    const canvas = this.canvas();
 
     canvas.addEventListener('mousedown', (e) => {
       this.pressed = true;
@@ -53,10 +57,10 @@ export default class Canvas extends Component {
   }
 
   redraw() {
-    const canvas = this.refs.canvas;
+    const canvas = this.canvas();
     const context = canvas.getContext('2d');
 
-    context.strokeStyle = "#0000a0";
+    context.strokeStyle = "#000000";
     context.lineJoin = "round";
     context.lineWidth = 6;
 
@@ -84,5 +88,16 @@ export default class Canvas extends Component {
     return rect.top;
   }
 
+  assessDigit() {
+    const canvas = this.canvas();
+    this.props.onAssess(canvas.toDataURL());
+  }
+
+  canvas() {
+    return this.refs.canvas;
+  }
 }
 
+Canvas.propTypes = {
+  onAssess: PropTypes.func.isRequired
+};
