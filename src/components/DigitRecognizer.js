@@ -19,7 +19,7 @@ export default class DigitRecognizer extends Component {
           onAssess={(image) => this.assessDigit(image)}
         />
         <div className={styles.result}>
-          <Result guessedNumber={this.state.guessedNumber}/>
+          <Result guessedNumber={this.state.guessedNumber} />
         </div>
         <div className={styles.debugger}>
           <Debugger inputImage={this.state.debuggerImage} />
@@ -31,8 +31,7 @@ export default class DigitRecognizer extends Component {
   assessDigit(image) {
     const image28px = this.poolImage(image);
     const inputVector = this.flattenImageToVector(image28px);
-    const neuralNet = new NeuralNet(inputVector);
-    const output = neuralNet.process();
+    const output = new NeuralNet().evaluateForVector(inputVector);
     this.setState({
       guessedNumber: output,
       debuggerImage: image28px
@@ -45,7 +44,8 @@ export default class DigitRecognizer extends Component {
   }
 
   flattenImageToVector(image28px) {
-    return [].concat(...image28px);
+    const flattenedArray = [].concat(...image28px);
+    return flattenedArray.map(value => value / 255);
   }
 }
 
