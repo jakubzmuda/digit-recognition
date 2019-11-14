@@ -18,8 +18,8 @@ export default class Canvas extends Component {
         <div className={styles.canvas}>
           <canvas
             ref={'canvas'}
-            width="400"
-            height="400"
+            width="392"
+            height="392"
           />
         </div>
         <button className={styles.button} onClick={() => this.assessDigit()}>go</button>
