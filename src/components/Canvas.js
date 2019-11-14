@@ -29,6 +29,11 @@ export default class Canvas extends Component {
 
   initCanvas() {
     const canvas = this.canvas();
+    const context = canvas.getContext('2d');
+
+    context.fillStyle = 'rgba(255, 255, 255, 255)';
+    context.fillRect(0, 0, 392, 392);
+
 
     canvas.addEventListener('mousedown', (e) => {
       this.pressed = true;

@@ -29,16 +29,14 @@ export default class Debugger extends Component {
   }
 
   drawImage(image) {
-    console.log('drawing image');
     for (let y = 0; y < image.length; y++) {
       for (let x = 0; x < image[0].length; x++) {
-        this.drawPixel(x, y, image[x][y] * 255);
+        this.drawPixel(x, y, image[y][x]);
       }
     }
   }
 
   drawPixel(x, y, r) {
-    console.log();
     const canvas = this.canvas();
     const context = canvas.getContext('2d');
 

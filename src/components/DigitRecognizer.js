@@ -3,7 +3,7 @@ import styles from './DigitRecognizer.module.css';
 import Canvas from './Canvas';
 import Result from './Result';
 import Debugger from './Debugger';
-import Image from '../image';
+import Image from '../Image';
 
 export default class DigitRecognizer extends Component {
 
