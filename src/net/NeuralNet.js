@@ -30,7 +30,7 @@ export default class NeuralNet {
       sum += inputVector[i] * weights[i];
     }
 
-    return this.sigmoid(sum + bias);
+    return Math.tanh(sum + bias);
   }
 
   sigmoid(input) {
