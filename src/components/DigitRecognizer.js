@@ -3,7 +3,7 @@ import styles from './DigitRecognizer.module.css';
 import Canvas from './Canvas';
 import Result from './Result';
 import Debugger from './Debugger';
-import Image from '../Image';
+import CanvasImageConverter from '../CanvasImageConverter';
 import NeuralNet from '../net/NeuralNet';
 
 export default class DigitRecognizer extends Component {
@@ -42,7 +42,7 @@ export default class DigitRecognizer extends Component {
   }
 
   poolImage(canvasImage) {
-    const image = new Image(canvasImage);
+    const image = new CanvasImageConverter(canvasImage);
     return image.as28pxImage();
   }
 

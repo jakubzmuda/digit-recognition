@@ -1,4 +1,4 @@
-export default class Image {
+export default class CanvasImageConverter {
   constructor(canvasImage) {
     this.canvasImage = canvasImage;
   }

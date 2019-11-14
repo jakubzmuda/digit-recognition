@@ -1,9 +1,9 @@
-const path = require('path');
 const fs = require('fs');
+const PNG = require('pngjs').PNG;
 
 console.log('training');
 
-for(let i=0;i<=9;i++) {
+for (let i = 0; i <= 9; i++) {
   learnDigit(i);
 }
 
@@ -14,7 +14,10 @@ function learnDigit(digit) {
       return console.log('Unable to scan directory: ' + err);
     }
     files.forEach(function (file) {
-      console.log(file);
+      const filePath = `${directoryPath}/${file}`;
+      const data = fs.readFileSync(filePath);
+      const png = PNG.sync.read(data);
+      console.log(png);
     });
   });
 }
