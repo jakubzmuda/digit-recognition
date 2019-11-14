@@ -9,7 +9,8 @@ import NeuralNet from '../net/NeuralNet';
 export default class DigitRecognizer extends Component {
 
   state = {
-    debuggerImage: null
+    debuggerImage: null,
+    netOutput: null
   };
 
   render() {
@@ -19,7 +20,9 @@ export default class DigitRecognizer extends Component {
           onAssess={(image) => this.assessDigit(image)}
         />
         <div className={styles.result}>
-          <Result guessedNumber={this.state.guessedNumber} />
+          <Result
+            netOutput={this.state.netOutput}
+          />
         </div>
         <div className={styles.debugger}>
           <Debugger inputImage={this.state.debuggerImage} />
@@ -33,8 +36,8 @@ export default class DigitRecognizer extends Component {
     const inputVector = this.flattenImageToVector(image28px);
     const output = new NeuralNet().evaluateForVector(inputVector);
     this.setState({
-      guessedNumber: output,
-      debuggerImage: image28px
+      debuggerImage: image28px,
+      netOutput: output
     })
   }
 

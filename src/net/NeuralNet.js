@@ -5,9 +5,7 @@ export default class NeuralNet {
   evaluateForVector(inputVector) {
     const firstHiddenLayerOutput = this.evaluateLayer(0, inputVector);
     const secondHiddenLayerOutput = this.evaluateLayer(1, firstHiddenLayerOutput);
-    const output = this.evaluateLayer(2, secondHiddenLayerOutput);
-    console.log(output);
-    return 5;
+    return this.evaluateLayer(2, secondHiddenLayerOutput);
   }
 
   evaluateLayer(layerIndex, inputVector) {

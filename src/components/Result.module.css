@@ -1,10 +1,16 @@
 .container {
-    width: 400px;
-    height: 56px;
+    width: 368px;
+    padding: 16px;
     background-color: #2d2d2d;
     color: #dddddd;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     border-radius: 16px;
+}
+
+.details {
+    font-size: 12px;
+    margin-top: 16px;
 }
