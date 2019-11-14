@@ -1,4 +1,4 @@
-const model = require('../../model.json');
+const model = require('../model.json');
 
 export default class NeuralNet {
 
@@ -18,6 +18,7 @@ export default class NeuralNet {
   }
 
   evaluateNeuron(neuron, inputVector) {
+    console.log(neuron);
     const weights = neuron.weights;
     const bias = neuron.bias;
 

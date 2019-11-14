@@ -9,9 +9,7 @@ class ModelSeedGenerator {
 
   generateFirstHiddenLayerValues(inputVectorLength) {
     return {
-      neurons: [
-        [...Array(16).keys()].map(() => this.generateNeuron(inputVectorLength))
-      ]
+      neurons: [...Array(16).keys()].map(() => this.generateNeuron(inputVectorLength))
     }
   }
 
