@@ -5,7 +5,7 @@ export default class Result extends Component {
   render() {
     return (
       <div className={styles.container}>
-
+        I think the result is ...
       </div>
     );
   }

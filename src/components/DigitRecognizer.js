@@ -8,7 +8,9 @@ export default class DigitRecognizer extends Component {
     return (
       <div className={styles.container}>
         <Canvas />
-        <Result />
+        <div className={styles.result}>
+          <Result />
+        </div>
       </div>
     );
   }

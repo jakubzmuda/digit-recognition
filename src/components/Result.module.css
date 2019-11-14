@@ -1,3 +1,10 @@
 .container {
-
+    width: 400px;
+    height: 56px;
+    background-color: #2d2d2d;
+    color: #dddddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
 }
