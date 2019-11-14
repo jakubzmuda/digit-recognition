@@ -4,7 +4,7 @@ export default class NeuralNet {
 
   evaluateForVector(inputVector) {
     const firstHiddenLayerOutput = this.evaluateFirstHiddenLayer(inputVector);
-    console.log(firstHiddenLayerOutput);
+    console.log(firstHiddenLayerOutput); // todo this is not kool, should be continuous
     return 5;
   }
 
@@ -18,7 +18,6 @@ export default class NeuralNet {
   }
 
   evaluateNeuron(neuron, inputVector) {
-    console.log(neuron);
     const weights = neuron.weights;
     const bias = neuron.bias;
 
