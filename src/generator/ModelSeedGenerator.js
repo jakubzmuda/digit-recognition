@@ -1,25 +1,21 @@
 const numberOfFirstLayerNeurons = 16;
 const numberOfSecondLayerNeurons = 16;
+const numberOfOutputLayerNeurons = 10;
 
 class ModelSeedGenerator {
   generate(inputVectorLength) {
     return {
       layers: [
-        this.generateFirstHiddenLayerValues(inputVectorLength),
-        this.generateSecondHiddenLayerValues(numberOfFirstLayerNeurons),
+        this.generateLayerValues(inputVectorLength, numberOfFirstLayerNeurons),
+        this.generateLayerValues(numberOfFirstLayerNeurons, numberOfSecondLayerNeurons),
+        this.generateLayerValues(numberOfSecondLayerNeurons, numberOfOutputLayerNeurons),
       ]
     }
   }
 
-  generateFirstHiddenLayerValues(inputVectorLength) {
+  generateLayerValues(inputVectorLength, numberOfNeurons) {
     return {
-      neurons: [...Array(numberOfFirstLayerNeurons).keys()].map(() => this.generateNeuron(inputVectorLength))
-    }
-  }
-
-  generateSecondHiddenLayerValues(inputVectorLength) {
-    return {
-      neurons: [...Array(numberOfSecondLayerNeurons).keys()].map(() => this.generateNeuron(inputVectorLength))
+      neurons: [...Array(numberOfNeurons).keys()].map(() => this.generateNeuron(inputVectorLength))
     }
   }
 

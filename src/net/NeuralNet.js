@@ -3,13 +3,15 @@ const model = require('../model.json');
 export default class NeuralNet {
 
   evaluateForVector(inputVector) {
-    const firstHiddenLayerOutput = this.evaluateFirstHiddenLayer(inputVector);
-    // console.log(firstHiddenLayerOutput); // todo this is not kool, should be continuous
+    const firstHiddenLayerOutput = this.evaluateLayer(0, inputVector);
+    const secondHiddenLayerOutput = this.evaluateLayer(1, firstHiddenLayerOutput);
+    const output = this.evaluateLayer(2, secondHiddenLayerOutput);
+    console.log(output);
     return 5;
   }
 
-  evaluateFirstHiddenLayer(inputVector) {
-    const layer = model.layers[0];
+  evaluateLayer(layerIndex, inputVector) {
+    const layer = model.layers[layerIndex];
     const output = [];
     for (let i = 0; i < layer.neurons.length; i++) {
       output.push(this.evaluateNeuron(layer.neurons[i], inputVector));
