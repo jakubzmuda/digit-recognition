@@ -25,6 +25,11 @@ function learnDigit(digit) {
           inputVector.push(png.data[idx]);
         }
       }
+      train(inputVector, digit);
     });
   });
+}
+
+function train(inputVector, digit) {
+
 }
