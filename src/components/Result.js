@@ -20,7 +20,7 @@ export default class Result extends Component {
     }
     return (
       <div className={styles.container}>
-        Draw a digit and hit go
+        Draw a digit
       </div>
     )
   }

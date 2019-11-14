@@ -22,18 +22,14 @@ export default class Canvas extends Component {
             height="392"
           />
         </div>
-        <button className={styles.button} onClick={() => this.assessDigit()}>go</button>
+        <button className={styles.button} onClick={() => this.reset()}>reset</button>
       </div>
     );
   }
 
   initCanvas() {
     const canvas = this.canvas();
-    const context = canvas.getContext('2d');
-
-    context.fillStyle = 'rgba(255, 255, 255, 255)';
-    context.fillRect(0, 0, 392, 392);
-
+    this.paintCanvasWhite(this.canvas());
 
     canvas.addEventListener('mousedown', (e) => {
       this.pressed = true;
@@ -54,11 +50,20 @@ export default class Canvas extends Component {
 
     canvas.addEventListener('mouseup', (e) => {
       this.pressed = false;
+      this.assessDigit();
     });
 
     canvas.addEventListener('mouseleave', (e) => {
       this.pressed = false;
     });
+  }
+
+  reset() {
+    this.pressed = false;
+    this.moves = [];
+
+    const canvas = this.canvas();
+    this.paintCanvasWhite(canvas);
   }
 
   redraw() {
@@ -97,12 +102,19 @@ export default class Canvas extends Component {
     const canvas = this.canvas();
     const context = canvas.getContext('2d');
 
-    const imgData = context.getImageData(0,0,canvas.width,canvas.height);
+    const imgData = context.getImageData(0, 0, canvas.width, canvas.height);
     this.props.onAssess(imgData);
   }
 
   canvas() {
     return this.refs.canvas;
+  }
+
+  paintCanvasWhite(canvas) {
+    const context = canvas.getContext('2d');
+
+    context.fillStyle = 'rgba(255, 255, 255, 255)';
+    context.fillRect(0, 0, 392, 392);
   }
 }
 
