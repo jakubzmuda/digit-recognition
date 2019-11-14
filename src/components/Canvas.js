@@ -90,7 +90,10 @@ export default class Canvas extends Component {
 
   assessDigit() {
     const canvas = this.canvas();
-    this.props.onAssess(canvas.toDataURL());
+    const context = canvas.getContext('2d');
+
+    const imgData = context.getImageData(0,0,canvas.width,canvas.height);
+    this.props.onAssess(imgData);
   }
 
   canvas() {
