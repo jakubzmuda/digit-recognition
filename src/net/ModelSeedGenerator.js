@@ -1,4 +1,4 @@
-export default class ModelSeedGenerator {
+class ModelSeedGenerator {
   generate(inputVectorLength) {
     return {
       layers: [
@@ -26,3 +26,5 @@ export default class ModelSeedGenerator {
     return Math.random() * (max - min) + min
   }
 }
+
+module.exports = ModelSeedGenerator;
