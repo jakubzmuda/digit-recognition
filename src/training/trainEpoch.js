@@ -23,9 +23,6 @@ console.log('model trained');
 
 function calculateAverageNegativeGradientDescent(trainingData) {
   // calculate for biases
-  // then add and average them
-
-  //average it at the end
 
   let allInputVectorGradients = [];
 
