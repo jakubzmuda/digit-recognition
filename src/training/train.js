@@ -22,7 +22,7 @@ function learnDigit(digit) {
       for (let y = 0; y < png.height; y++) {
         for (let x = 0; x < png.width; x++) {
           const idx = (png.width * y + x) << 2;
-          inputVector.push(png.data[idx]);
+          inputVector.push(255 - png.data[idx]);
         }
       }
       train(inputVector, digit);
