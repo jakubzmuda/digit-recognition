@@ -66,11 +66,9 @@ function calculateWeightAverageNegativeGradientDescent(trainingData) {
     }
   }
 
-  // console.log('sum', biasesAverageGradient);
-
   //finding average and flip sign
   for (let i = 0; i < weightsAverageGradient.length; i++) {
-    biasesAverageGradient[i] = -(biasesAverageGradient[i] / allWeightsInputVectorGradients.length); // todo check if + or -
+    biasesAverageGradient[i] = -(biasesAverageGradient[i] / allWeightsInputVectorGradients.length);
     for (let j = 0; j < weightsAverageGradient[i].length; j++) {
       weightsAverageGradient[i][j] = -(weightsAverageGradient[i][j] / allWeightsInputVectorGradients.length);
     }
