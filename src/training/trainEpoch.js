@@ -150,7 +150,7 @@ function trainLastLayer(negativeWeightGradientDescent, negativeBiasGradientDesce
 
   for (let neuronIndex = 0; neuronIndex <= 9; neuronIndex++) {
     for (let weightIndex = 0; weightIndex < neurons[neuronIndex].weights.length; weightIndex++) {
-      neurons[neuronIndex].weights[weightIndex] = neurons[neuronIndex].weights[weightIndex] + negativeWeightGradientDescent[neuronIndex][weightIndex]; // todo moze dzielic na pol czy cos
+      neurons[neuronIndex].weights[weightIndex] = neurons[neuronIndex].weights[weightIndex] + negativeWeightGradientDescent[neuronIndex][weightIndex];
     }
     neurons[neuronIndex].bias += negativeBiasGradientDescent[neuronIndex];
   }

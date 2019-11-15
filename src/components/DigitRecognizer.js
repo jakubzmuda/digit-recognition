@@ -47,8 +47,7 @@ export default class DigitRecognizer extends Component {
   }
 
   flattenImageToVector(image28px) {
-    const flattenedArray = [].concat(...image28px);
-    return flattenedArray.map(value => value / 255);
+    return [].concat(...image28px);
   }
 }
 
