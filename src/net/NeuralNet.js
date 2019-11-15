@@ -1,6 +1,8 @@
-const model = require('../model.json');
+class NeuralNet {
 
-export default class NeuralNet {
+  constructor() {
+    this.model = require('../model.json');
+  }
 
   evaluateForVector(inputVector) {
     const firstHiddenLayerOutput = this.evaluateLayer(0, inputVector);
@@ -9,7 +11,7 @@ export default class NeuralNet {
   }
 
   evaluateLayer(layerIndex, inputVector) {
-    const layer = model.layers[layerIndex];
+    const layer = this.model.layers[layerIndex];
     const output = [];
     for (let i = 0; i < layer.neurons.length; i++) {
       output.push(this.evaluateNeuron(layer.neurons[i], inputVector));
@@ -37,3 +39,5 @@ export default class NeuralNet {
     return 1 / (1 + Math.exp(-input));
   }
 }
+
+module.exports = NeuralNet;
