@@ -11,16 +11,18 @@ console.log('converted', trainingData.length, 'png images to input vector, now c
 
 const averageCost = calculateAverageCost(trainingData);
 
-console.log('average cost =', averageCost);
+console.log('average cost =', averageCost, 'now calculating average gradient descent');
 
 const averageNegativeGradientDescent = calculateAverageNegativeGradientDescent(trainingData);
 
-console.log('average negative gradient descent = ', averageNegativeGradientDescent);
+console.log('calculated average negative gradient descent, now training new model');
 
-//remember about - sign
+trainLastLayer(averageNegativeGradientDescent);
+
+console.log('model trained');
+
 function calculateAverageNegativeGradientDescent(trainingData) {
-  //first calculate for weights
-  // then calculate for biases
+  // calculate for biases
   // then add and average them
 
   //average it at the end
@@ -32,7 +34,7 @@ function calculateAverageNegativeGradientDescent(trainingData) {
 
     let gradientsForConnections = [];
 
-    for (let i = 0; i < 9; i++) { // for every neuron in the last layer
+    for (let i = 0; i <= 9; i++) { // for every neuron in the last layer
       const thirdLayerActivationValues = new NeuralNetwork().evaluateForVectorToThirdLayerOnly(trainingEntry.inputVector);
       gradientsForConnections.push([]);
       for (let j = 0; j < 16; j++) { // for every neuron in the second last layer
@@ -48,7 +50,7 @@ function calculateAverageNegativeGradientDescent(trainingData) {
     allInputVectorGradients.push(gradientsForConnections);
   });
 
-  let averageGradient = [...Array(9).keys()].map(() => [...Array(16).keys()].map(() => 0));
+  let averageGradient = [...Array(10).keys()].map(() => [...Array(16).keys()].map(() => 0));
 
   //accumulating
   for (let i = 0; i < allInputVectorGradients.length; i++) { //files
@@ -62,7 +64,7 @@ function calculateAverageNegativeGradientDescent(trainingData) {
   //finding average and flip sign
   for (let i = 0; i < averageGradient.length; i++) {
     for (let j = 0; j < averageGradient[i].length; j++) {
-      averageGradient[i][j] = - (averageGradient[i][j] / allInputVectorGradients.length);
+      averageGradient[i][j] = -(averageGradient[i][j] / allInputVectorGradients.length);
     }
   }
 
@@ -107,7 +109,7 @@ function convertDigitToInputVector(digit) {
 
   for (let i = 0; i < files.length; i++) {
 
-    if (i > 100) { // TODO remove if all data set should be loaded
+    if (i > 300) { // TODO remove if all data set should be loaded
       break;
     }
 
@@ -130,4 +132,27 @@ function convertDigitFromPngToInputVector(filePath) {
     }
   }
   return inputVector;
+}
+
+function trainLastLayer(negativeGradientDescent) {
+  const model = loadModel();
+
+  const neurons = model.layers[2].neurons;
+
+  for (let neuronIndex = 0; neuronIndex <= 9; neuronIndex++) {
+    for (let weightIndex = 0; weightIndex < neurons[neuronIndex].weights.length; weightIndex++) {
+      neurons[neuronIndex].weights[weightIndex] = neurons[neuronIndex].weights[weightIndex] + negativeGradientDescent[neuronIndex][weightIndex]; // todo moze dzielic na pol czy cos
+    }
+  }
+
+  serializeModel(model);
+}
+
+function loadModel() {
+  return require('../model.json');
+}
+
+function serializeModel(model) {
+  let data = JSON.stringify(model);
+  fs.writeFileSync('./src/model.json', data);
 }
