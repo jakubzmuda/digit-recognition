@@ -13,59 +13,71 @@ const averageCost = calculateAverageCost(trainingData);
 
 console.log('average cost =', averageCost, 'now calculating average gradient descent');
 
-const averageNegativeGradientDescent = calculateAverageNegativeGradientDescent(trainingData);
+const { weightsAverageNegativeGradientDescent, biasesAverageNegativeGradientDescent } = calculateWeightAverageNegativeGradientDescent(trainingData);
 
 console.log('calculated average negative gradient descent, now training new model');
 
-trainLastLayer(averageNegativeGradientDescent);
+trainLastLayer(weightsAverageNegativeGradientDescent, biasesAverageNegativeGradientDescent);
 
 console.log('model trained');
 
-function calculateAverageNegativeGradientDescent(trainingData) {
+function calculateWeightAverageNegativeGradientDescent(trainingData) {
   // calculate for biases
 
-  let allInputVectorGradients = [];
+  let allWeightsInputVectorGradients = [];
+  let allBiasesInputVectorGradients = [];
 
   trainingData.forEach((trainingEntry, i) => {
     const neuralNetOutput = new NeuralNetwork().evaluateForVector(trainingEntry.inputVector);
 
-    let gradientsForConnections = [];
+    let weightGradientsForConnections = [];
+    let biasGradientsForConnections = [];
 
     for (let i = 0; i <= 9; i++) { // for every neuron in the last layer
       const thirdLayerActivationValues = new NeuralNetwork().evaluateForVectorToThirdLayerOnly(trainingEntry.inputVector);
-      gradientsForConnections.push([]);
+      weightGradientsForConnections.push([]);
+
+      const desiredProbability = trainingEntry.desiredOutput === i ? 1 : 0;
+      const derivative2 = math.sigmoidDerivative(new NeuralNetwork().evaluateForVectorWithoutLinearRegressingLastLayer(trainingEntry.inputVector)[i]);
+      const derivative1 = 2 * (neuralNetOutput[i] - desiredProbability);
+      const biasGradient = derivative1 * derivative2;
+      biasGradientsForConnections.push(biasGradient);
       for (let j = 0; j < 16; j++) { // for every neuron in the second last layer
-        const desiredProbability = trainingEntry.desiredOutput === i ? 1 : 0;
-        const derivative1 = 2 * (neuralNetOutput[i] - desiredProbability);
-        const derivative2 = math.sigmoidDerivative(new NeuralNetwork().evaluateForVectorWithoutLinearRegressingLastLayer(trainingEntry.inputVector)[i]);
         const derivative3 = thirdLayerActivationValues[j];
-        const gradient = derivative1 * derivative2 * derivative3;
-        gradientsForConnections[i].push(gradient);
+        const weightGradient = derivative1 * derivative2 * derivative3;
+        weightGradientsForConnections[i].push(weightGradient);
       }
     }
 
-    allInputVectorGradients.push(gradientsForConnections);
+    allWeightsInputVectorGradients.push(weightGradientsForConnections);
+    allBiasesInputVectorGradients.push(biasGradientsForConnections);
   });
 
-  let averageGradient = [...Array(10).keys()].map(() => [...Array(16).keys()].map(() => 0));
+  let weightsAverageGradient = [...Array(10).keys()].map(() => [...Array(16).keys()].map(() => 0));
+  let biasesAverageGradient = [...Array(10).keys()].map(() => 0);
 
   //accumulating
-  for (let i = 0; i < allInputVectorGradients.length; i++) { //files
-    for (let j = 0; j < allInputVectorGradients[i].length; j++) { // last layer neurons
-      for (let k = 0; k < allInputVectorGradients[i][j].length; k++) { // fourth - third layer connection gradients
-        averageGradient[j][k] = averageGradient[j][k] + allInputVectorGradients[i][j][k];
+  for (let i = 0; i < allWeightsInputVectorGradients.length; i++) { //files
+    for (let j = 0; j < allWeightsInputVectorGradients[i].length; j++) { // last layer neurons
+      biasesAverageGradient[j] +=  allBiasesInputVectorGradients[i][j];
+      for (let k = 0; k < allWeightsInputVectorGradients[i][j].length; k++) { // fourth - third layer connection gradients
+        weightsAverageGradient[j][k] +=  allWeightsInputVectorGradients[i][j][k];
       }
     }
   }
 
+  // console.log('sum', biasesAverageGradient);
+
   //finding average and flip sign
-  for (let i = 0; i < averageGradient.length; i++) {
-    for (let j = 0; j < averageGradient[i].length; j++) {
-      averageGradient[i][j] = -(averageGradient[i][j] / allInputVectorGradients.length);
+  for (let i = 0; i < weightsAverageGradient.length; i++) {
+    biasesAverageGradient[i] = -(biasesAverageGradient[i] / allWeightsInputVectorGradients.length); // todo check if + or -
+    for (let j = 0; j < weightsAverageGradient[i].length; j++) {
+      weightsAverageGradient[i][j] = -(weightsAverageGradient[i][j] / allWeightsInputVectorGradients.length);
     }
   }
 
-  return averageGradient;
+
+  return { weightsAverageNegativeGradientDescent: weightsAverageGradient, biasesAverageNegativeGradientDescent: biasesAverageGradient };
 }
 
 function calculateAverageCost(trainingData) {
@@ -131,15 +143,16 @@ function convertDigitFromPngToInputVector(filePath) {
   return inputVector;
 }
 
-function trainLastLayer(negativeGradientDescent) {
+function trainLastLayer(negativeWeightGradientDescent, negativeBiasGradientDescent) {
   const model = loadModel();
 
   const neurons = model.layers[2].neurons;
 
   for (let neuronIndex = 0; neuronIndex <= 9; neuronIndex++) {
     for (let weightIndex = 0; weightIndex < neurons[neuronIndex].weights.length; weightIndex++) {
-      neurons[neuronIndex].weights[weightIndex] = neurons[neuronIndex].weights[weightIndex] + negativeGradientDescent[neuronIndex][weightIndex]; // todo moze dzielic na pol czy cos
+      neurons[neuronIndex].weights[weightIndex] = neurons[neuronIndex].weights[weightIndex] + negativeWeightGradientDescent[neuronIndex][weightIndex]; // todo moze dzielic na pol czy cos
     }
+    neurons[neuronIndex].bias += negativeBiasGradientDescent[neuronIndex];
   }
 
   serializeModel(model);
