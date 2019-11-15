@@ -31,5 +31,4 @@ function learnDigit(digit) {
 }
 
 function train(inputVector, digit) {
-
 }

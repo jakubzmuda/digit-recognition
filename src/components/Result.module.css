@@ -8,9 +8,10 @@
     align-items: center;
     justify-content: center;
     border-radius: 16px;
+    font-size: 20px;
 }
 
 .details {
-    font-size: 12px;
+    font-size: 16px;
     margin-top: 16px;
 }

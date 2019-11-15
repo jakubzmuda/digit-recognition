@@ -72,7 +72,7 @@ export default class Canvas extends Component {
 
     context.strokeStyle = "#000000";
     context.lineJoin = "round";
-    context.lineWidth = 6;
+    context.lineWidth = 20;
 
     for (let i = 0; i < this.moves.length; i++) {
       context.beginPath();
