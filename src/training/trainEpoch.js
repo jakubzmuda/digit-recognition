@@ -59,10 +59,10 @@ function calculateAverageNegativeGradientDescent(trainingData) {
     }
   }
 
-  //finding average
+  //finding average and flip sign
   for (let i = 0; i < averageGradient.length; i++) {
     for (let j = 0; j < averageGradient[i].length; j++) {
-      averageGradient[i][j] = averageGradient[i][j] / allInputVectorGradients.length;
+      averageGradient[i][j] = - (averageGradient[i][j] / allInputVectorGradients.length);
     }
   }
 
