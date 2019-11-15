@@ -118,7 +118,7 @@ function convertDigitToInputVector(digit) {
 
   for (let i = 0; i < files.length; i++) {
 
-    if (i > 300) { // TODO remove if all data set should be loaded
+    if (i > 2000) { // TODO data load cap
       break;
     }
 
