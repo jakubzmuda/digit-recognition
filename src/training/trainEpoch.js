@@ -15,7 +15,7 @@ console.log('average cost =', averageCost);
 
 const averageNegativeGradientDescent = calculateAverageNegativeGradientDescent(trainingData);
 
-// console.log('average negative gradient descent = ', averageNegativeGradientDescent);
+console.log('average negative gradient descent = ', averageNegativeGradientDescent);
 
 //remember about - sign
 function calculateAverageNegativeGradientDescent(trainingData) {
@@ -50,8 +50,6 @@ function calculateAverageNegativeGradientDescent(trainingData) {
 
   let averageGradient = [...Array(9).keys()].map(() => [...Array(16).keys()].map(() => 0));
 
-  console.log('averageGradient', averageGradient);
-
   //accumulating
   for (let i = 0; i < allInputVectorGradients.length; i++) { //files
     for (let j = 0; j < allInputVectorGradients[i].length; j++) { // last layer neurons
@@ -62,9 +60,8 @@ function calculateAverageNegativeGradientDescent(trainingData) {
   }
 
   //finding average
-  console.log('allInputVectorGradients.length', allInputVectorGradients.length);
-  for (let i = 0; i < allInputVectorGradients.length; i++) {
-    for (let j = 0; j < allInputVectorGradients[i].length; j++) {
+  for (let i = 0; i < averageGradient.length; i++) {
+    for (let j = 0; j < averageGradient[i].length; j++) {
       averageGradient[i][j] = averageGradient[i][j] / allInputVectorGradients.length;
     }
   }
