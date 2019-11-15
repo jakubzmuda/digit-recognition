@@ -12,6 +12,12 @@ const averageCost = calculateAverageCost(trainingData);
 
 console.log('average cost =', averageCost);
 
+const negativeGradientDescent = calculateNegativeGradientDescent();
+
+function calculateNegativeGradientDescent() {
+
+}
+
 function calculateAverageCost(trainingData) {
   let sum = 0;
   trainingData.forEach(trainingEntry => {

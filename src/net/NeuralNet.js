@@ -1,3 +1,5 @@
+const math = require('../math');
+
 class NeuralNet {
 
   constructor() {
@@ -32,11 +34,7 @@ class NeuralNet {
       sum += inputVector[i] * weights[i];
     }
 
-    return this.sigmoid(sum + bias);
-  }
-
-  sigmoid(input) {
-    return 1 / (1 + Math.exp(-input));
+    return math.sigmoid(sum + bias);
   }
 }
 
