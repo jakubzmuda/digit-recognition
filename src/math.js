@@ -8,5 +8,6 @@ function sigmoidDerivative(input) {
 }
 
 module.exports = {
-  sigmoid
+  sigmoid,
+  sigmoidDerivative
 };

@@ -12,16 +12,27 @@ class NeuralNet {
     return this.evaluateLayer(2, secondHiddenLayerOutput);
   }
 
-  evaluateLayer(layerIndex, inputVector) {
+  evaluateForVectorWithoutLinearRegressingLastLayer(inputVector) {
+    const firstHiddenLayerOutput = this.evaluateLayer(0, inputVector);
+    const secondHiddenLayerOutput = this.evaluateLayer(1, firstHiddenLayerOutput);
+    return this.evaluateLayer(2, secondHiddenLayerOutput, true);
+  }
+
+  evaluateForVectorToThirdLayerOnly(inputVector) {
+    const firstHiddenLayerOutput = this.evaluateLayer(0, inputVector);
+    return this.evaluateLayer(1, firstHiddenLayerOutput);
+  }
+
+  evaluateLayer(layerIndex, inputVector, skipLinearRegression = false) {
     const layer = this.model.layers[layerIndex];
     const output = [];
     for (let i = 0; i < layer.neurons.length; i++) {
-      output.push(this.evaluateNeuron(layer.neurons[i], inputVector));
+      output.push(this.evaluateNeuron(layer.neurons[i], inputVector, skipLinearRegression));
     }
     return output;
   }
 
-  evaluateNeuron(neuron, inputVector) {
+  evaluateNeuron(neuron, inputVector, skipLinearRegression) {
     const weights = neuron.weights;
     const bias = neuron.bias;
 
@@ -34,7 +45,7 @@ class NeuralNet {
       sum += inputVector[i] * weights[i];
     }
 
-    return math.sigmoid(sum + bias);
+    return skipLinearRegression ? (sum + bias) : math.sigmoid(sum + bias);
   }
 }
 
